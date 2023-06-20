@@ -488,12 +488,99 @@ print_list([Head|Tail]) :-
     write(Head), 
     nl,          
     print_list(Tail). 
- 
-generandoReporte1 :- setof((Nombre-Apellidos-Pais-Opinion),         Idcliente^Edad^Estadocivil^Motivo^Idregistro^Hotel^Fecharegistro^Estadia^Opinion^(cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), europa(Pais), registro(Idregistro,Idcliente,Hotel,Fecharegistro,Estadia,Opinion), Opinion>5), Clientes),
+
+
+
+
+generandoReporte1 :- setof((Apellidos- Nombre : Pais --> Opinion),         Idcliente^Edad^Estadocivil^Motivo^Idregistro^Hotel^Fecharegistro^Estadia^Opinion^(cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), europa(Pais), registro(Idregistro,Idcliente,Hotel,Fecharegistro,Estadia,Opinion), Opinion>5), Clientes),
 print_list(Clientes). 
 reporte1 :- write('\n\n\n\n\nREPORTE 1: \n'), nl,
             generandoReporte1,
             fin.
+
+
+generandoReporte2 :- setof(Apellidos-Nombre-->Estadocivil, Idcliente^Pais^Edad^Motivo^Idregistro^Idhotel^Fecharegistro^Estadia^Opinion^Idhotel^NombreHotel^DireccionciaKM^Estrellas^Habsimple^Habdoble^Precioxcomida^Departamento^Distancia^(cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Departamento,Distancia), Estrellas > 4), Clientes),
+print_list(Clientes).
+reporte2 :- write('\n\n\n\n\nREPORTE 2: \n'), nl,
+            generandoReporte2,
+            fin.
+
+
+generandoReporte3 :- setof(Nombre -> NombreHotel, Idtrabajador^Cargo^Idhotel^DireccionciaKM^Estrellas^Habsimple^Habdoble^Precioxcomida^Departamento^Distancia^Idregistro^Idcliente^Idhotel^Fecharegistro^Estadia^Opinion^(trabajador(Idtrabajador,Nombre,Cargo,Idhotel), hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Departamento,Distancia), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), Opinion > 4, Cargo = 'Administrador'), Clientes ),
+print_list(Clientes).
+
+reporte3 :- write('\n\n\n\n\nREPORTE 3: \n'), nl,
+            generandoReporte3,
+            fin.
+
+
+generandoReporte4 :- ,
+print_list(Clientes).
+
+reporte4 :- write('\n\n\n\n\nREPORTE 4: \n'), nl,
+            generandoReporte4,
+            fin.
+
+generandoReporte5 :- ,
+print_list(Clientes).
+
+reporte5 :- write('\n\n\n\n\nREPORTE 5: \n'), nl,
+            generandoReporte5,
+            fin.
+
+
+generandoReporte6 :- ,
+print_list(Clientes).
+
+reporte6 :- write('\n\n\n\n\nREPORTE 6: \n'), nl,
+            generandoReporte6,
+            fin.
+
+
+
+generandoReporte7 :- ,
+print_list(Clientes).
+
+reporte7 :- write('\n\n\n\n\nREPORTE 7: \n'), nl,
+            generandoReporte7,
+            fin.
+
+
+generandoReporte8 :- ,
+print_list(Clientes).
+
+reporte8 :- write('\n\n\n\n\nREPORTE 8: \n'), nl,
+            generandoReporte8,
+            fin.
+
+
+generandoReporte9 :- ,
+print_list(Clientes).
+
+reporte9 :- write('\n\n\n\n\nREPORTE 9: \n'), nl,
+            generandoReporte9,
+            fin.
+
+
+generandoReporte10 :- ,
+print_list(Clientes).
+
+reporte10 :- write('\n\n\n\n\nREPORTE 10: \n'), nl,
+            generandoReporte10,
+            fin.
+
+
+generarTodos :- reporte1,
+        reporte2,
+        reporte3,
+        reporte4,
+        reporte5,
+        reporte6,
+        reporte7,
+        reporte8,
+        reporte9,
+        reporte10,
+        fin;
 
 
 fin :- write('\n\n\n\n\nFIN\n\n\n\n\n').
