@@ -15,3 +15,31 @@ weather(sarjah, winter, cold).
 
 [main].
 inicio.
+
+
+cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo).
+
+departamento(Iddepartamento,Nombre,Tiempoviaje,Lenguajelocal,Clima,Pasaje).
+
+hotel(Idhotel,Nombre,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Departamento,Distancia).
+
+registro(Idregistro,Cliente,Hotel,Fecharegistro,Estadia,Opinion).
+
+trabajador(Idtrabajador,Nombre,Cargo,Hotel).
+
+
+
+query1() :-
+  setof(Idcliente-Nombre-Apellidos-Pais-Opinion,
+    (cliente(Idcliente, Nombre, Apellidos, Pais, _, _, _),
+    europa(Pais),
+    registro(_, Idcliente, _, _, _, Opinion),
+    Opinion > 5),
+    Clientes).
+
+
+printClientes([]).
+printClientes([Nombre-Apellidos-Pais-Opinion | Rest]) :-
+  write(Nombre), write(' '), write(Apellidos), write(': '),
+  write(Pais), write(' -> '), write(Opinion), write('\n'),
+  printClientes(Rest).

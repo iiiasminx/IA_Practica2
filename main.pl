@@ -3,7 +3,7 @@ cliente(2,'Fabrizio','Sartini','Italia',25,'Casado','Vacaciones').
 cliente(3,'Gustavo','Molina','Holanda',15,'Soltero','Trabajo').
 cliente(4,'Maria','Gutierrez','Guatemala',20,'Soltero','Vacaciones').
 cliente(5,'Cornelio','Bustamante','Guatemala',18,'Soltero','Trabajo').
-cliente(6,'Loraine','Cortez','Española',34,'Divorciado','Paso').
+cliente(6,'Loraine','Cortez','Espania',34,'Divorciado','Paso').
 cliente(7,'Paco','Estanley','Guatemala',30,'Soltero','Vacaciones').
 cliente(8,'Daniela','Samayoa','Guatemala',21,'Casado','Trabajo').
 cliente(9,'Silvia','Santis','El Salvador',50,'Casado','Paso').
@@ -15,7 +15,7 @@ cliente(14,'Margot','Claus','USA',32,'Soltero','Vacaciones').
 cliente(15,'Jorge','Calderon','Venezuela',26,'Casado','Paso').
 cliente(17,'Maira','Martinez','Mexico',25,'Soltero','Trabajo').
 cliente(18,'Jazmin','Dolores','Venezuela',27,'Casado','Vacaciones').
-cliente(19,'Mauro','Hernandez','Español',22,'Soltero','Vacaciones').
+cliente(19,'Mauro','Hernandez','Espania',22,'Soltero','Vacaciones').
 cliente(20,'Luis','Sagastume','Costa Rica',20,'Soltero','Trabajo').
 cliente(21,'Rcharson','Patric','Inglaterra',30,'Casado','Vacaciones').
 cliente(22,'Montheri','Lois','Inglaterra',32,'Casado','Vacaciones').
@@ -428,11 +428,25 @@ trabajador(299,'Carmelo','Oficinista',30).
 trabajador(300,'Lorein','Oficinista',31).
 trabajador(301,'yulisa','Encargado',31).
 
+
+europa('Italia').
+europa('Holanda').
+europa('Espania').
+europa('Inglaterra').
+
+america('Guatemala').
+america('El Salvador').
+america('Honduras').
+america('USA').
+america('Venezuela').
+america('Mexico').
+america('Costa Rica').
+
 presentacion :- write('\33\[2J'),
         write('\n\n\n\n\nUNIVERSIDAD DE SAN CARLOS DE GUATEMALA 
         \nFACULTAD DE INGENIERIA 
         \nINTELIGENCIA ARTIFICIAL I
-        \nPRACTICA #2
+        \nPRACTICA No. 2
         \nYASMIN ELISA MONTERROSO ESCOBEDO
         \n201801385').
 
@@ -468,15 +482,33 @@ getEstadia :- write('\n\n¿CUANTOS DIAS DESEA QUEDARSE EN EL HOTEL?\n\n'),
                 read(Estadia), 
                 write('\n\nOK. ->'), write(Estadia), write('\n\n').
 
+
+print_list([]). 
+print_list([Head|Tail]) :-
+    write(Head), 
+    nl,          
+    print_list(Tail). 
+ 
+generandoReporte1 :- setof((Nombre-Apellidos-Pais-Opinion),         Idcliente^Edad^Estadocivil^Motivo^Idregistro^Hotel^Fecharegistro^Estadia^Opinion^(cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), europa(Pais), registro(Idregistro,Idcliente,Hotel,Fecharegistro,Estadia,Opinion), Opinion>5), Clientes),
+print_list(Clientes). 
+reporte1 :- write('\n\n\n\n\nREPORTE 1: \n'), nl,
+            generandoReporte1,
+            fin.
+
+
 fin :- write('\n\n\n\n\nFIN\n\n\n\n\n').
 
 inicio :- presentacion, 
-        getPresupuesto,
-        getIdioma,
-        getEstrellas,
-        getClima,
-        getTipoHabitacion,
-        getDistancia,
-        getVehiculo,
-        getEstadia,
+        % getPresupuesto,
+        % getIdioma,
+        % getEstrellas,
+        % getClima,
+        % getTipoHabitacion,
+        % getDistancia,
+        % getVehiculo,
+        % getEstadia,
+        reporte1,
         fin.
+
+
+

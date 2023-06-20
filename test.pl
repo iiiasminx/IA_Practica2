@@ -32,3 +32,19 @@ runs(albert) :- happy(albert).
 does_alice_dance :- dances(alice),
        write('When Alice is happy and with Albert she dances').
 % is alice dancing now? with console response
+
+
+likes(wallace, cheese).
+likes(grommit, cheese).
+likes(wendolene, sheep).
+
+query(likes(wallace, cheese)).
+query(likes(mickey, whisky)).
+
+% service predicates, check the library and use that if available
+forall(X,Y) :- \+ (X, \+ Y).
+writeln(T) :- write(T), nl.
+
+main2 :-
+    forall(query(Q), (Q -> writeln(yes:Q) ; writeln(no:Q))),
+    halt.
