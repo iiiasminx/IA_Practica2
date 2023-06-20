@@ -1,0 +1,17 @@
+working_directory(CWD,'C:/Users/monterro.y108692/Desktop/College/IA_Practica2').
+write('\33\[2J').
+
+cliente(A,B,C,D,E,F,G).
+departamento(A,B,C,D,E,F).
+hotel(A,B,C,D,E,F,G,H,I).
+registro(A,B,C,D,E,F).
+trabajador(A,B,C,D).
+
+
+loves(romeo, juliet).
+weather(dubai, summer,  hot).
+weather(dubai, winter, warm).
+weather(sarjah, winter, cold).
+
+[main].
+inicio.
