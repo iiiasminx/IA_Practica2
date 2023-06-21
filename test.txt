@@ -43,3 +43,9 @@ printClientes([Nombre-Apellidos-Pais-Opinion | Rest]) :-
   write(Nombre), write(' '), write(Apellidos), write(': '),
   write(Pais), write(' -> '), write(Opinion), write('\n'),
   printClientes(Rest).
+
+
+
+  analisis(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, TipoHabitacion, Comidas, Vehiculo, Estadia) :- write('ESTE ES TU MEJOR OPCION VIP:'), nl,
+        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habsimple*Estadia > Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
+        print_list(Presupuesto1).

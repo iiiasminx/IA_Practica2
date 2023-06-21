@@ -452,36 +452,174 @@ presentacion :- write('\33\[2J'),
 
 getPresupuesto :- write('\n\n¿CUAL ES SU PRESUSPUESTO PREFERENCIAL?\n\n'), 
                 read(Presupuesto), 
-                write('\n\nOK. ->'), write(Presupuesto), write('\n\n').
+                write('\n\nOK. ->'), write(Presupuesto), write('\n\n'),
+                getIdioma(Presupuesto).
 
-getIdioma :- write('\n\n¿CUAL ES SU IDIOMA DE PREFERENCIA?\n\n1.Espaniol\n2.Katchikel\n3.Ingles\n\n'), 
+getIdioma(Presupuesto) :- write('\n\n¿CUAL ES SU IDIOMA DE PREFERENCIA?\n\n1.Espaniol\n2.Katchikel\n3.Ingles\n\n'), 
                 read(Idioma), 
-                write('\n\nOK. ->'), write(Idioma), write('\n\n').
+                write('\n\nOK. ->'), write(Idioma), write('\n\n'),
+                getEstrellas(Presupuesto, Idioma).
 
-getEstrellas :- write('\n\n¿CUANTAS ESTRELLAS PREFIERE DE 0 A 5?\n\n'), 
+getEstrellas(Presupuesto, Idioma) :- write('\n\n¿CUANTAS ESTRELLAS PREFIERE DE 0 A 5?\n\n'), 
                 read(Estrellas), 
-                write('\n\nOK. ->'), write(Estrellas), write('\n\n').
+                write('\n\nOK. ->'), write(Estrellas), write('\n\n'),
+                getClima(Presupuesto, Idioma, Estrellas).
 
-getClima :- write('\n\n¿CUAL ES SU CLIMA DE PREFERENCIA?\n\n1.Calido\n2.Tropical\n3.Templado\n4.Frio\n\n'), 
+getClima(Presupuesto, Idioma, Estrellas) :- write('\n\n¿CUAL ES SU CLIMA DE PREFERENCIA?\n\n1.Calido\n2.Tropical\n3.Templado\n4.Frio\n\n'), 
                 read(Clima), 
-                write('\n\nOK. ->'), write(Clima), write('\n\n').
+                write('\n\nOK. ->'), write(Clima), write('\n\n'),
+                getTipoHabitacion(Presupuesto, Idioma, Estrellas, Clima).
 
-getTipoHabitacion :- write('\n\n¿QUE TIPO DE HABITACION DESEA?\n\n1.Simple\n2.Doble\n\n'), 
-                read(Idioma), 
-                write('\n\nOK. ->'), write(Idioma), write('\n\n').
-
-getDistancia :- write('\n\n¿DESEA QUE EL HOTEL SE ENCUENTRE CERCA?\n\n1.Si\n2.No\n\n'), 
+getTipoHabitacion(Presupuesto, Idioma, Estrellas, Clima) :- write('\n\n¿QUE TIPO DE HABITACION DESEA?\n\n1.Simple\n2.Doble\n\n'), 
                 read(TipoHabitacion), 
-                write('\n\nOK. ->'), write(TipoHabitacion), write('\n\n').
+                write('\n\nOK. ->'), write(TipoHabitacion), write('\n\n'),
+                getDistancia(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion).
 
-getVehiculo :- write('\n\n¿CUENTA CON VEHÍCULO?\n\n1.Si\n2.No\n\n'), 
+getDistancia(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion) :- write('\n\n¿DESEA QUE INCLUIR LAS COMIDAS EN EL PRESUPUESTO?\n\n1.Si\n2.No\n\n'), 
+                read(Distancia), 
+                write('\n\nOK. ->'), write(Distancia), write('\n\n'),
+                getVehiculo(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia).
+
+getVehiculo(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia) :- write('\n\n¿CUENTA CON VEHÍCULO?\n\n1.Si\n2.No\n\n'), 
                 read(Vehiculo), 
-                write('\n\nOK. ->'), write(Vehiculo), write('\n\n').
+                write('\n\nOK. ->'), write(Vehiculo), write('\n\n'),
+                getEstadia(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo).
 
-getEstadia :- write('\n\n¿CUANTOS DIAS DESEA QUEDARSE EN EL HOTEL?\n\n'), 
+getEstadia(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo) :- write('\n\n¿CUANTOS DIAS DESEA QUEDARSE EN EL HOTEL?\n\n'), 
                 read(Estadia), 
-                write('\n\nOK. ->'), write(Estadia), write('\n\n').
+                write('\n\nOK. ->'), write(Estadia), write('\n\n'),
+                inicioCaminos(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia).
 
+
+inicioCaminos(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia) :- write(':)'), nl,
+        caminoClima(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia).
+
+caminoClima(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia) :- (Clima = 1 ->
+        write('Calculando opciones de clima calido...'), nl, 
+        caminoEstrellas(Presupuesto, Idioma, Estrellas, 'calor', TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+        Clima = 2 ->
+        write('Calculando opciones de clima tropical...'), nl, 
+        caminoEstrellas(Presupuesto, Idioma, Estrellas, 'tropical', TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+        Clima = 3 ->
+        write('Calculando opciones de clima templado...'), nl, 
+        caminoEstrellas(Presupuesto, Idioma, Estrellas, 'templado', TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+        write('Calculando opciones de clima frio...'), nl, 
+        caminoEstrellas(Presupuesto, Idioma, Estrellas, 'frio', TipoHabitacion, Distancia, Vehiculo, Estadia)
+
+    ).
+
+caminoEstrellas(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia) :- (Estrellas = 1 ->
+        write('Calculando opciones de 1 Estrella...'), nl, 
+        caminoIdioma(Presupuesto, Idioma, 1, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+        Estrellas = 2 ->
+        write('Calculando opciones de 2 Estrellas...'), nl, 
+        caminoIdioma(Presupuesto, Idioma, 2, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+    Estrellas = 3 ->
+        write('Calculando opciones de 3 Estrellas...'), nl, 
+        caminoIdioma(Presupuesto, Idioma, 3, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+    Estrellas = 4 ->
+        write('Calculando opciones de 4 Estrellas...'), nl, 
+        caminoIdioma(Presupuesto, Idioma, 4, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+
+        write('Calculando opciones de 5 Estrellas...'), nl, 
+        caminoIdioma(Presupuesto, Idioma, 5, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+
+    ).
+
+caminoIdioma(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia) :- (Idioma = 1 ->
+        write('Calculando opciones en espaniol...'), nl, 
+        caminoPresupuesto(Presupuesto, 'espanol', Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+        Idioma = 3 ->
+        write('Calculando opciones en ingles...'), nl, 
+        caminoPresupuesto(Presupuesto, 'ingles', Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+    ;
+        write('Calculando opciones en kakchiquel...'), nl, 
+        caminoPresupuesto(Presupuesto, 'katchikel', Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia)
+
+    ).
+
+caminoPresupuesto(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distancia, Vehiculo, Estadia) :- write('LISTO!'), nl,
+            write('Calculando tu presupuesto VIP...'), nl, 
+            write('Calculando tu presupuesto económico...'), nl,
+            analisis(Presupuesto, Idioma, Estrellas, ClimaDeseado, TipoHabitacion, Comidas, Vehiculo, Estadia).
+
+analisis(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, TipoHabitacion, Comidas, Vehiculo, Estadia) :- write('ESTE ES TU MEJOR OPCION VIP:'), nl,
+        (TipoHabitacion = 1 ->
+
+        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habsimple*Estadia > Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
+        print_one(Presupuesto1),
+        write('PRECIO POR HABITACION: Q.'), nl,
+        (Comidas = 2 -> 
+            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        ), 
+        (Vehiculo = 2 -> 
+            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        )
+    ;
+        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habdoble*Estadia > Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
+        print_one(Presupuesto1),
+        write('PRECIO POR HABITACION: Q.'), nl,
+        (Comidas = 2 -> 
+            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        ), 
+        (Vehiculo = 2 -> 
+            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        )
+    
+    ),
+    write('ESTE ES TU MEJOR OPCION ECONOMICA:'), nl,
+        (TipoHabitacion = 1 ->
+
+        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habsimple*Estadia < Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto2),
+        print_one(Presupuesto2),
+        write('PRECIO POR HABITACION: Q.'), nl,
+        (Comidas = 2 -> 
+            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        ), 
+        (Vehiculo = 2 -> 
+            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        )
+    ;
+        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habdoble*Estadia < Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto2),
+        print_one(Presupuesto2),
+       write('PRECIO POR HABITACION: Q.'), nl,
+       (Comidas = 2 -> 
+            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        ), 
+        (Vehiculo = 2 -> 
+            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
+            ;
+            write(':D')
+        )
+    
+    ).
+
+print_one([]). 
+print_one([Head|Tail]) :-
+    write(Head), 
+    nl.
 
 print_list([]). 
 print_list([Head|Tail]) :-
@@ -645,8 +783,11 @@ generarTodos :- reporte1,
 
 fin :- write('\n\n\n\n\nFIN\n\n\n\n\n').
 
+
+
+
 inicio :- presentacion, 
-        % getPresupuesto,
+        getPresupuesto,
         % getIdioma,
         % getEstrellas,
         % getClima,
@@ -654,7 +795,6 @@ inicio :- presentacion,
         % getDistancia,
         % getVehiculo,
         % getEstadia,
-        reporte1,
         fin.
 
 
