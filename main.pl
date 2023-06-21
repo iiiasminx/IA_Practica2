@@ -489,6 +489,36 @@ print_list([Head|Tail]) :-
     nl,          
     print_list(Tail). 
 
+print_value_occurrences(List) :-
+    count_value_occurrences(List, Occurrences),
+    print_occurrences(Occurrences).
+
+count_value_occurrences(List, Occurrences) :-
+    count_value_occurrences_helper(List, [], Occurrences).
+
+count_value_occurrences_helper([], Occurrences, Occurrences).
+count_value_occurrences_helper([Value|Tail], TempOccurrences, Occurrences) :-
+    update_counter(Value, TempOccurrences, NewOccurrences),
+    count_value_occurrences_helper(Tail, NewOccurrences, Occurrences).
+
+update_counter(Value, [], [(Value, 1)]).
+update_counter(Value, [(Value, Count)|Tail], [(Value, NewCount)|Tail]) :-
+    NewCount is Count + 1.
+update_counter(Value, [(OtherValue, OtherCount)|Tail], [(OtherValue, OtherCount)|NewTail]) :-
+    Value \= OtherValue,
+    update_counter(Value, Tail, NewTail).
+
+print_occurrences([]).
+print_occurrences([(Value, Count)|Tail]) :-
+    shouldIprint(Value, Count),
+    print_occurrences(Tail).
+
+shouldIprint(Value, Count) :- 
+    (Count > 1 ->
+        write(Value), write(" - "), write(Count), write("\n")
+    ;
+        write('')
+    ).
 
 
 
@@ -514,14 +544,17 @@ reporte3 :- write('\n\n\n\n\nREPORTE 3: \n'), nl,
             fin.
 
 
-generandoReporte4 :- ,
-print_list(Clientes).
+generandoReporte4 :- bagof(Nombre -> NombreHotel , Iddepartamento^Tiempoviaje^Lenguajelocal^Clima^Pasaje^Idhotel^DireccionciaKM^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Idregistro^Idcliente^Idhotel^Fecharegistro^Estadia^Opinion^(departamento(Iddepartamento,Nombre,Tiempoviaje,Lenguajelocal,Clima,Pasaje), hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), Clima='calor'), Clientes),
+print_value_occurrences(Clientes).
 
 reporte4 :- write('\n\n\n\n\nREPORTE 4: \n'), nl,
             generandoReporte4,
             fin.
 
-generandoReporte5 :- ,
+
+
+
+generandoReporte5 :- setof(Apellidos-Nombre --> Pais - NombreDepto, Idcliente^Edad^Estadocivil^Motivo^Idregistro^Idhotel^Fecharegistro^Estadia^Opinion^NombreHotel^DireccionciaKM^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Iddepartamento^NombreDepto^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal='espanol', Pais \= 'Guatemala'), Clientes),
 print_list(Clientes).
 
 reporte5 :- write('\n\n\n\n\nREPORTE 5: \n'), nl,
@@ -529,7 +562,7 @@ reporte5 :- write('\n\n\n\n\nREPORTE 5: \n'), nl,
             fin.
 
 
-generandoReporte6 :- ,
+generandoReporte6 :- bagof(NombreHotel-NombreDepto-Lenguajelocal --> Apellidos:Nombre, Idcliente^Edad^Estadocivil^Motivo^Idregistro^Idhotel^Fecharegistro^Estadia^Opinion^NombreHotel^DireccionciaKM^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^NombreDepto^Tiempoviaje^Lenguajelocal^Clima^Pasaje^Pais^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), Opinion > 6, Estadia > 2) ,Clientes),
 print_list(Clientes).
 
 reporte6 :- write('\n\n\n\n\nREPORTE 6: \n'), nl,
@@ -538,7 +571,7 @@ reporte6 :- write('\n\n\n\n\nREPORTE 6: \n'), nl,
 
 
 
-generandoReporte7 :- ,
+generandoReporte7 :- setof(Pais -> NombreHotel, Idcliente^Nombre^Apellidos^Edad^Estadocivil^Motivo^Idregistro^Idhotel^Fecharegistro^Estadia^Opinion^DireccionciaKM^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^NombreDepto^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal='ingles', Estadia < 2, Pais \= 'Guatemala' ),Clientes),
 print_list(Clientes).
 
 reporte7 :- write('\n\n\n\n\nREPORTE 7: \n'), nl,
@@ -546,7 +579,7 @@ reporte7 :- write('\n\n\n\n\nREPORTE 7: \n'), nl,
             fin.
 
 
-generandoReporte8 :- ,
+generandoReporte8 :- setof(Pais,Idcliente^Nombre^Apellidos^Edad^Estadocivil^Motivo^Idregistro^Idhotel^Fecharegistro^Estadia^Opinion^Fecharegistro^Estadia^Opinion^NombreHotel^DireccionciaKM^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^(cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), Iddepartamento=1),Clientes),
 print_list(Clientes).
 
 reporte8 :- write('\n\n\n\n\nREPORTE 8: \n'), nl,
@@ -554,7 +587,7 @@ reporte8 :- write('\n\n\n\n\nREPORTE 8: \n'), nl,
             fin.
 
 
-generandoReporte9 :- ,
+generandoReporte9 :- setof(NombreHotel-DireccionciaKM,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Idcliente^Nombre^Apellidos^Edad^Estadocivil^Motivo^Idregistro^Idhotel^Opinion^Fecharegistro^Estadia^Opinion^Pais^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), cliente(Idcliente,Nombre,Apellidos,Pais,Edad,Estadocivil,Motivo), registro(Idregistro,Idcliente,Idhotel,Fecharegistro,Estadia,Opinion), Opinion > 6, Estadocivil = 'Casado', Estadia > 2),Clientes),
 print_list(Clientes).
 
 reporte9 :- write('\n\n\n\n\nREPORTE 9: \n'), nl,
@@ -562,12 +595,39 @@ reporte9 :- write('\n\n\n\n\nREPORTE 9: \n'), nl,
             fin.
 
 
-generandoReporte10 :- ,
-print_list(Clientes).
+ifReporte(Number) :- (Number = 1 ->
+        reporte1
+    ;
+    Number = 2 ->
+        reporte2
+    ;
+    Number = 3 ->
+        reporte3
+    ;
+    Number = 4 ->
+        reporte4
+    ;
+    Number = 5 ->
+        reporte5
+    ;
+    Number = 6 ->
+        reporte6
+    ;
+    Number = 7 ->
+        reporte7
+    ;
+    Number = 8 ->
+        reporte8
+    ;
+        reporte9
+    ).
 
-reporte10 :- write('\n\n\n\n\nREPORTE 10: \n'), nl,
-            generandoReporte10,
-            fin.
+reportes :- presentacion,
+        write('¿QUÉ REPORTE DESEA VER?'), nl,
+        read(Reporte),
+        ifReporte(Reporte), nl,
+        read(Cosa), write(Cosa),
+        reportes.
 
 
 generarTodos :- reporte1,
@@ -580,7 +640,7 @@ generarTodos :- reporte1,
         reporte8,
         reporte9,
         reporte10,
-        fin;
+        fin.
 
 
 fin :- write('\n\n\n\n\nFIN\n\n\n\n\n').
