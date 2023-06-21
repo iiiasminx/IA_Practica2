@@ -551,69 +551,62 @@ caminoPresupuesto(Presupuesto, Idioma, Estrellas, Clima, TipoHabitacion, Distanc
             write('Calculando tu presupuesto económico...'), nl,
             analisis(Presupuesto, Idioma, Estrellas, ClimaDeseado, TipoHabitacion, Comidas, Vehiculo, Estadia).
 
+
+
+printMulti(X, Y) :- 
+    write(Y), nl, nl,
+    Result is X*Y,
+    write(Result).
+
+imprimirTipo1(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) :- 
+        setof(Habdoble -NombreHotel-  Precioxcomida - NombreHotel - Distancia - NombreDepto-Pasaje,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habsimple*Estadia > Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
+        print_one(Presupuesto1),
+        process_finalSet(Presupuesto1, Estadia, Vehiculo, Comidas).
+
+imprimirTipo2(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) :-
+        setof(Habdoble -NombreHotel-  Precioxcomida - NombreHotel - Distancia - NombreDepto-Pasaje, Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habdoble*Estadia > Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
+        print_one(Presupuesto1),
+        process_finalSet(Presupuesto1, Estadia, Vehiculo, Comidas).
+
+imprimirTipo3(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) :- 
+        setof(Habdoble -NombreHotel-  Precioxcomida - NombreHotel - Distancia - NombreDepto-Pasaje,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habsimple*Estadia < Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
+        print_one(Presupuesto1),
+        process_finalSet(Presupuesto1, Estadia, Vehiculo, Comidas).
+
+imprimirTipo4(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) :-
+        setof(Habdoble -NombreHotel-  Precioxcomida - NombreHotel - Distancia - NombreDepto-Pasaje, Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habdoble*Estadia < Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
+        print_one(Presupuesto1),
+        process_finalSet(Presupuesto1, Estadia, Vehiculo, Comidas).
+
+
+
 analisis(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, TipoHabitacion, Comidas, Vehiculo, Estadia) :- write('ESTE ES TU MEJOR OPCION VIP:'), nl,
         (TipoHabitacion = 1 ->
-
-        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habsimple*Estadia > Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
-        print_one(Presupuesto1),
-        write('PRECIO POR HABITACION: Q.'), nl,
-        (Comidas = 2 -> 
-            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+        (imprimirTipo1(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) ->
+        write('')
             ;
-            write(':D')
-        ), 
-        (Vehiculo = 2 -> 
-            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
-            ;
-            write(':D')
-        )
+            write('NO SE ENCUENTRA UNA SOLUCIÓN PARA LO QUE BUSCAS, INTENTA CON OTROS PARAMETROS :c'), nl
+            )
     ;
-        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habdoble*Estadia > Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto1),
-        print_one(Presupuesto1),
-        write('PRECIO POR HABITACION: Q.'), nl,
-        (Comidas = 2 -> 
-            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+        (imprimirTipo2(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) ->
+        write('')
             ;
-            write(':D')
-        ), 
-        (Vehiculo = 2 -> 
-            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
-            ;
-            write(':D')
-        )
-    
-    ),
+            write('NO SE ENCUENTRA UNA SOLUCIÓN PARA LO QUE BUSCAS, INTENTA CON OTROS PARAMETROS :c'), nl
+        )  
+    ), 
     write('ESTE ES TU MEJOR OPCION ECONOMICA:'), nl,
         (TipoHabitacion = 1 ->
-
-        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habsimple*Estadia < Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto2),
-        print_one(Presupuesto2),
-        write('PRECIO POR HABITACION: Q.'), nl,
-        (Comidas = 2 -> 
-            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+        (imprimirTipo3(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) -> 
+            write('')
             ;
-            write(':D')
-        ), 
-        (Vehiculo = 2 -> 
-            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
-            ;
-            write(':D')
+            write('NO SE ENCUENTRA UNA SOLUCIÓN PARA LO QUE BUSCAS, INTENTA CON OTROS PARAMETROS :c'), nl
         )
     ;
-        setof(NombreHotel: DireccionciaKM - NombreDepto,Idhotel^Estrellas^Habsimple^Habdoble^Precioxcomida^Iddepartamento^Distancia^Tiempoviaje^Lenguajelocal^Clima^Pasaje^(hotel(Idhotel,NombreHotel,DireccionciaKM,Estrellas,Habsimple,Habdoble,Precioxcomida,Iddepartamento,Distancia), departamento(Iddepartamento,NombreDepto,Tiempoviaje,Lenguajelocal,Clima,Pasaje), Lenguajelocal = Idioma, ClimaDeseado=Clima, Habdoble*Estadia < Presupuesto, EstrellasDeseadas=Estrellas),Presupuesto2),
-        print_one(Presupuesto2),
-       write('PRECIO POR HABITACION: Q.'), nl,
-       (Comidas = 2 -> 
-            write('LAS COMIDAS NO SE TOMARÁN EN CUENTA PARA ESTE PRESUPUESTO'), nl
+        (imprimirTipo4(Presupuesto, Idioma, EstrellasDeseadas, ClimaDeseado, Comidas, Vehiculo, Estadia) ->
+        write('')
             ;
-            write(':D')
-        ), 
-        (Vehiculo = 2 -> 
-            write('LAS GASOLINA NO SE TOMARÁ EN CUENTA PARA ESTE PRESUPUESTO'), nl
-            ;
-            write(':D')
-        )
-    
+            write('NO SE ENCUENTRA UNA SOLUCIÓN PARA LO QUE BUSCAS, INTENTA CON OTROS PARAMETROS :c'), nl
+        )   
     ).
 
 print_one([]). 
@@ -621,11 +614,50 @@ print_one([Head|Tail]) :-
     write(Head), 
     nl.
 
+process_finalSet([], Estadia, Vehiculo, Comidas). 
+process_finalSet([Habdoble -NombreHotel-Precioxcomida-NombreHotel-DireccionciaKM-NombreDepto-Pasaje|Tail], Estadia, Vehiculo, Comidas) :-
+    write(NombreHotel), write(", se encuentra en "), write(DireccionciaKM), write(" en "), write(NombreDepto), nl,
+    PriceHab is Habdoble*Estadia,
+    PriceFood is 3*Precioxcomida*Estadia,
+    (
+        Vehiculo = 1 ->
+            PriceCarro is DireccionciaKM*25,
+            Total1 is PriceCarro + PriceHab,
+            write('EL PRECIO POR HABITACION ES Q.'), write(PriceHab), nl,
+            write('EL PRECIO DE PASAJE ES Q.'), write(PriceCarro), nl,
+            (
+                Comidas = 1 ->     
+                Total is PriceCarro + PriceFood + PriceHab,     
+                write('EL PRECIO TOTAL DE LAS COMIDAS ES Q. '), write(PriceFood), nl,
+                write('EL PRECIO TOTAL ES Q.'), write(Total), nl
+                ;
+                write('EL PRECIO TOTAL ES Q.'), write(Total1), nl
+            )
+        ;
+            PriceCarro is Pasaje*2,
+            Total1 is PriceCarro + PriceHab,
+            write('EL PRECIO POR HABITACION ES Q.'), write(PriceHab), nl,
+            write('EL PRECIO DE PASAJE ES Q.'), write(PriceCarro), nl,            
+            (
+                Comidas = 1 ->     
+                Total is PriceCarro + PriceFood + PriceHab,     
+                write('EL PRECIO TOTAL DE LAS COMIDAS ES Q. '), write(PriceFood), nl,
+                write('EL PRECIO TOTAL ES Q.'), write(Total), nl
+                ;
+                write('EL PRECIO TOTAL ES Q.'), write(Total1), nl
+            )
+    ).
+
+
+
 print_list([]). 
 print_list([Head|Tail]) :-
     write(Head), 
     nl,          
     print_list(Tail). 
+
+
+
 
 print_value_occurrences(List) :-
     count_value_occurrences(List, Occurrences),
